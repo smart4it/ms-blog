@@ -20,8 +20,16 @@ public class ArticleService {
     public Page<ArticleDto> getArticles(Pageable pageable) {
         log.info("getArticles started: pageable={}", pageable);
         Page<Article> articlePage = articleRepository.findAll(pageable);
-        List<ArticleDto> articleDtoList = articlePage.getContent().stream().map(ArticleDto::new).toList();
+        List<ArticleDto> articleDtoList = articlePage.getContent()
+                .stream()
+                .map(article -> new ArticleDto(article, createPreview(article)))
+                .toList();
         log.info("getArticles completed: pageable={}, total={}", pageable, articlePage.getTotalElements());
         return new PageImpl<>(articleDtoList, articlePage.getPageable(), articlePage.getTotalElements());
+    }
+
+    private String createPreview(Article article) {
+        int lastIndex = Math.min(article.getContent().length(), 250);
+        return article.getContent().substring(0, lastIndex);
     }
 }
