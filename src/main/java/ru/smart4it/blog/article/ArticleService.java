@@ -6,9 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 import ru.smart4it.blog.article.dto.ArticleDto;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -31,5 +33,14 @@ public class ArticleService {
     private String createPreview(Article article) {
         int lastIndex = Math.min(article.getContent().length(), 250);
         return article.getContent().substring(0, lastIndex);
+    }
+
+    public ArticleDto getById(UUID id) {
+        log.info("getById started: id={}", id);
+        ArticleDto dto = articleRepository.findById(id)
+                .map(article -> new ArticleDto(article, createPreview(article)))
+                .orElseThrow(() -> new NotFoundException("article not found"));
+        log.info("getById completed: id={}", id);
+        return dto;
     }
 }
