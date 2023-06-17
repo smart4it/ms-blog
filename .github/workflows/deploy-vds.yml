@@ -8,6 +8,10 @@ on:
 
 env:
   BLOG_VERSION: 0.0.${{ github.run_number }}
+  DB_URL: "jdbc:postgresql://83.222.8.191:5432/default_db"
+  DB_USER: test
+  DB_PASS: test
+  DATABASE_SCHEMA: ms_blog
 
 jobs:
   build:
