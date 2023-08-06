@@ -8,7 +8,7 @@ import java.util.UUID;
 public record ArticleDto(UUID id, String title, String preview, String content, LocalDateTime created,
                          LocalDateTime updated) {
     public ArticleDto(Article article, String preview) {
-        this(article.getId(), article.getTitle(), article.getContent(), preview, article.getCreated(),
+        this(article.getId(), article.getTitle(), preview, article.getContent(), article.getCreated(),
              article.getUpdated());
     }
 }

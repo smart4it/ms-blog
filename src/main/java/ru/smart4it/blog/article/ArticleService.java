@@ -32,7 +32,7 @@ public class ArticleService {
 
     private String createPreview(Article article) {
         int lastIndex = Math.min(article.getContent().length(), 250);
-        return article.getContent().substring(0, lastIndex);
+        return article.getContent().substring(0, lastIndex) + "...";
     }
 
     public ArticleDto getById(UUID id) {
